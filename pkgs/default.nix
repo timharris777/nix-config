@@ -9,7 +9,14 @@
   # Nix packages
   environment.systemPackages = with pkgs; [
     neovim
+    kubectl
+    kustomize
+    kubectx
+    saml2aws
+    tmux
+    stern
     git
+    git-credential-manager
     nixfmt-rfc-style
     nixd
     fzf
@@ -25,6 +32,20 @@
     zoxide
     findutils
     asdf
+    colima
+    docker-client
+    docker-compose
+    bruno
+    aerospace
+    karabiner-elements
+    awscli2
+    ssm-session-manager-plugin
+    utm
+    lastpass-cli
+    appcleaner
+    sketchybar
+    slack
+    teams
   ] ++ lib.optionals stdenv.isDarwin [
     cowsay
   ];
@@ -32,19 +53,26 @@
   # Homebrew packages
   homebrew = lib.mkIf pkgs.stdenv.isDarwin {
     enable = true;
-    # onActivation.cleanup = "zap";
+    onActivation.cleanup = "zap";
     onActivation.autoUpdate = true;
     onActivation.upgrade = true;
     taps = [ ];
-    brews = [ ];
+    brews = [
+      "helm" # not supported by nix on mac
+    ];
     casks = [
-      "ghostty"
+      "ghostty" # not supported by nix on mac
+      "visual-studio-code" # vscode
+      "dbgate"
+      "firefox@beta"
+      "logseq"
+      "postman"
+      "vivaldi" # not supported by nix on mac
     ];
   };
 
   # Fonts
-  fonts.packages = [
-    pkgs.nerd-fonts.symbols-only
-    pkgs.meslo-lgs-nf
+  fonts.packages = with pkgs; [
+    fira-code
   ];
 }
