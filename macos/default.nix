@@ -38,7 +38,7 @@
   };
 
   # Autohide the menu bar.
-  system.defaults.NSGlobalDomain._HIHideMenuBar = 1;
+  system.defaults.NSGlobalDomain._HIHideMenuBar = true;
 
   # Allout the user to use touch ID authentication for sudo.
   security.pam.services.sudo_local.touchIdAuth = true;
