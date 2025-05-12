@@ -23,7 +23,8 @@ znap source zsh-users/zsh-autosuggestions
 
 # znap: other
 # znap install zsh-users/zsh-completions
-znap eval zoxide 'zoxide init zsh --cmd cd'
+znap eval zoxide 'zoxide init zsh'
+alias cd="z"
 
 # # znap: completions
 # znap fpath _multipass '< ~[ohmyzsh]/plugins/multipass/_multipass'
