@@ -25,8 +25,26 @@
     NSGlobalDomain = {
       AppleShowAllExtensions = true;
       AppleShowAllFiles = true;
+      _HIHideMenuBar = true; # Autohide the menu bar.
+    };
+    CustomUserPreferences = {
+      "com.apple.symbolichotkeys" = {
+        AppleSymbolicHotKeys = {
+          # Disable 'Cmd + Space' for Spotlight Search
+          "64" = {
+            enabled = false;
+          };
+          # Disable 'Cmd + Alt + Space' for Finder search window
+          "65" = {
+            enabled = false;
+          };
+        };
+      };
     };
   };
+
+  # Allout the user to use touch ID authentication for sudo.
+  security.pam.services.sudo_local.touchIdAuth = true;
 
   # Necessary for using flakes on this system.
   nix.settings.experimental-features = "nix-command flakes";
@@ -36,12 +54,6 @@
     name = "tim.harris";
     home = "/Users/tim.harris";
   };
-
-  # Autohide the menu bar.
-  system.defaults.NSGlobalDomain._HIHideMenuBar = true;
-
-  # Allout the user to use touch ID authentication for sudo.
-  security.pam.services.sudo_local.touchIdAuth = true;
 
   # system.activationScripts.postUserActivation.text = ''
   #   # Following line should allow us to avoid a logout/login cycle

@@ -16,3 +16,7 @@
     ```
     darwin-rebuild switch --flake ~/.config/nix#macos
     ```
+
+5. Run the following apps and configure security/accessibility settings when prompted.
+    - aerospace
+    - karabiner elements
