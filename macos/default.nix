@@ -55,10 +55,10 @@
     home = "/Users/tim.harris";
   };
 
-  # system.activationScripts.postUserActivation.text = ''
-  #   # Following line should allow us to avoid a logout/login cycle
-  #   /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
-  # '';
+  system.activationScripts.postUserActivation.text = ''
+    # Following line should allow us to avoid a logout/login cycle
+    /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+  '';
 
   # Set Git commit hash for darwin-version.
   system.configurationRevision = self.rev or self.dirtyRev or null;
