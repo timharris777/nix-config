@@ -1,6 +1,6 @@
 # nix-config and dotfiles
 
-1. Install Determinate Linux
+1. Install Determinate Linux Nix
     ```
     curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install --determinate
     ```
