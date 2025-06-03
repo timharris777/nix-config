@@ -11,6 +11,7 @@
     neovim
     yq
     jq
+    gh
     kubectl
     kustomize
     kubectx
@@ -26,12 +27,14 @@
     zsh
     gnupg
     gawk
+    mise
+    usage
     gnused
     # zoxide
     k6
     starship
-    direnv
-    devenv
+    # direnv # like using mise better
+    # devenv # like using mise better
     zoxide
     findutils
     asdf

@@ -10,7 +10,7 @@
 source ~/.znap/znap.zsh
 
 # znap: set prompt to startship if available, and if not spaceship
-znap eval direnv 'direnv hook zsh'
+# znap eval direnv 'direnv hook zsh'
 znap eval starship 'starship init zsh --print-full-init'
 
 # znap: install plugins
@@ -22,11 +22,12 @@ znap source zsh-users/zsh-autosuggestions
 # znap source jeffreytse/zsh-vi-mode
 
 # znap: other
-# znap install zsh-users/zsh-completions
+znap eval mise 'mise activate zsh' # mise activation
+znap fpath _mise 'mise completion zsh' # mise completions
 znap eval zoxide 'zoxide init zsh'
 alias cd="z"
 
-# # znap: completions
+# znap: completions
 # znap fpath _multipass '< ~[ohmyzsh]/plugins/multipass/_multipass'
 # fpath+=( ~[ohmyzsh]/plugins/{multipass,pass} )
 # znap fpath _kubectl 'kubectl completion zsh'
@@ -43,15 +44,10 @@ bindkey "^[[B" down-line-or-beginning-search # Down
 
 # zvm_after_init_commands+=("zvm_bindkey viins '^R' fzf-history-widget" "bindkey '^[[A' up-line-or-beginning-search" "bindkey '^[[B' down-line-or-beginning-search")
 
-# # exports
-# export PAGER=
-# export GOPATH=$(asdf where golang)/packages
-# export GOROOT=$(asdf where golang)/go
+# exports
+export PAGER=
 
-# # Adding custom paths to PATH
-# export PATH="${HOME}/.bin:${PATH}:$(go env GOPATH)/bin"
-# # Overwriding PATH to use gnu-sed insteada of macos sed
-# export PATH="${HOMEBREW_PREFIX}/opt/gnu-sed/libexec/gnubin:${PATH}"
+# Adding custom paths to PATH
 
 # VSCODE shell integration
 [[ "$TERM_PROGRAM" == "vscode" ]] && . "$(code --locate-shell-integration-path zsh)"
@@ -72,16 +68,36 @@ function kn { export KUBECTL_NAMESPACE="$1"; }
 function kw { echo "${KUBECTL_CONTEXT:-$(kubectl config current-context)} (${KUBECTL_NAMESPACE:-$(kubectl config view --minify --output 'jsonpath={..namespace}')})"; }
 
 function rds-erc-dev() {
-    aloha -y -i $(aws ec2 describe-instances --filters 'Name=tag:Name,Values=aloha' --output text --query 'Reservations[*].Instances[*].InstanceId') -f --remoteHost riot-rds-cluster.cluster-c4kua9ptpy1t.us-east-1.rds.amazonaws.com --remotePort 5432 --localPort 54321
+    asp cfaiotnp-admin
+    cmd="54321:riot-rds-cluster.cluster-c4kua9ptpy1t.us-east-1.rds.amazonaws.com:5432"
+    alias=$(aws iam list-account-aliases --output text --query 'AccountAliases[0]')
+    instance_id=$(aws ec2 describe-instances --filters 'Name=tag:Name,Values=aloha' --output text --query 'Reservations[*].Instances[*].InstanceId')
+    echo "Connecting to ${alias} via the aloha instance (${instance_id}) and creating tunnel: ${cmd}"
+    ssh $instance_id -L "${cmd}"
 }
 function rds-goauth-dev() {
-    aloha -y -i $(aws ec2 describe-instances --filters 'Name=tag:Name,Values=aloha' --output text --query 'Reservations[*].Instances[*].InstanceId') -f --remoteHost goauth-2021-03-03-cluster.cluster-c4kua9ptpy1t.us-east-1.rds.amazonaws.com --remotePort 5432 --localPort 54322
+    asp cfaiotnp-admin
+    cmd="54322:goauth-2021-03-03-cluster.cluster-c4kua9ptpy1t.us-east-1.rds.amazonaws.com:5432"
+    alias=$(aws iam list-account-aliases --output text --query 'AccountAliases[0]')
+    instance_id=$(aws ec2 describe-instances --filters 'Name=tag:Name,Values=aloha' --output text --query 'Reservations[*].Instances[*].InstanceId')
+    echo "Connecting to ${alias} via the aloha instance (${instance_id}) and creating tunnel: ${cmd}"
+    ssh $instance_id -L "${cmd}"
 }
 function rds-erc-mirror() {
-    aloha -y -i $(aws ec2 describe-instances --filters 'Name=tag:Name,Values=aloha' --output text --query 'Reservations[*].Instances[*].InstanceId') -f --remoteHost riot-mirror-rds-instance.cluster-c8cexsfstnyt.us-east-1.rds.amazonaws.com --remotePort 5432 --localPort 54331
+    asp cfaioprod-admin
+    cmd="54331:riot-mirror-rds-instance.cluster-c8cexsfstnyt.us-east-1.rds.amazonaws.com:5432"
+    alias=$(aws iam list-account-aliases --output text --query 'AccountAliases[0]')
+    instance_id=$(aws ec2 describe-instances --filters 'Name=tag:Name,Values=aloha' --output text --query 'Reservations[*].Instances[*].InstanceId')
+    echo "Connecting to ${alias} via the aloha instance (${instance_id}) and creating tunnel: ${cmd}"
+    ssh $instance_id -L "${cmd}"
 }
 function rds-erc-prod() {
-    aloha -y -i $(aws ec2 describe-instances --filters 'Name=tag:Name,Values=aloha' --output text --query 'Reservations[*].Instances[*].InstanceId') -f --remoteHost riot-rds-08242021-cluster.cluster-c8cexsfstnyt.us-east-1.rds.amazonaws.com --remotePort 5432 --localPort 54341
+    asp cfaiotprod-admin
+    cmd="54341:riot-rds-08242021-cluster.cluster-c8cexsfstnyt.us-east-1.rds.amazonaws.com:5432"
+    alias=$(aws iam list-account-aliases --output text --query 'AccountAliases[0]')
+    instance_id=$(aws ec2 describe-instances --filters 'Name=tag:Name,Values=aloha' --output text --query 'Reservations[*].Instances[*].InstanceId')
+    echo "Connecting to ${alias} via the aloha instance (${instance_id}) and creating tunnel: ${cmd}"
+    ssh $instance_id -L "${cmd}"
 }
 function ensure-chick-fi-login() {
     FILE="$HOME/.oauth/okta_token"

@@ -20,8 +20,13 @@
 
   # OSX System settings
   system.defaults = {
-    dock.autohide = true;
-    dock.orientation = "left";
+    dock = { 
+      autohide = true;
+      orientation = "left";
+      show-recents = false;
+      persistent-apps = [];
+      appswitcher-all-displays = true;
+    };
     NSGlobalDomain = {
       AppleShowAllExtensions = true;
       AppleShowAllFiles = true;

@@ -1,6 +1,6 @@
 # nix-config and dotfiles
 
-1. Install Determinate Linux Nix
+1. Install Determinate Linux
     ```
     curl --proto '=https' --tlsv1.2 -sSf -L https://install.determinate.systems/nix | sh -s -- install --determinate
     ```
@@ -20,3 +20,4 @@
 5. Run the following apps and configure security/accessibility settings when prompted.
     - aerospace
     - karabiner elements
+    - raycast (cmd+space)
