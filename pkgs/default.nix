@@ -66,7 +66,11 @@
     brews = [
       "argocd" # Argocd admin gives open dist/app/index.html: file does not exist with nix on mac
       "helm" # not supported by nix on mac
-      "FelixKratz/formulae/sketchybar" # not working properly nix on mac
+      {
+        name="FelixKratz/formulae/sketchybar";
+        restart_service = "changed";
+        start_service=true;
+      }
       "zoxide"
     ];
     casks = [
