@@ -27,6 +27,10 @@
       persistent-apps = [];
       appswitcher-all-displays = true;
     };
+    trackpad = {
+      Clicking = true; # Enable tap to click
+      TrackpadThreeFingerDrag = true; # Enable three finger drag
+    };
     NSGlobalDomain = {
       AppleShowAllExtensions = true;
       AppleShowAllFiles = true;
