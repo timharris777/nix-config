@@ -1,5 +1,6 @@
 #!/bin/bash
 
 mkdir -p ~/Documents/backups
-cp -r ~/.gnupg ~/Documents/backups/.gnupg
-cp ~/.gitconfig ~/.gitconfig-cfacorp ~/Documents/backups
+cp ~/.gitconfig ~/Documents/backups
+cp ~/.gitconfig-cfacorp  ~/Documents/backups
+rsync -av --exclude='*.lock' ~/.gnupg/ ~/Documents/backups/.gnupg

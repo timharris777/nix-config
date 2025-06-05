@@ -20,11 +20,11 @@
 
   # OSX System settings
   system.defaults = {
-    dock = { 
+    dock = {
       autohide = true;
       orientation = "left";
       show-recents = false;
-      persistent-apps = [];
+      persistent-apps = [ ];
       appswitcher-all-displays = true;
     };
     trackpad = {
@@ -35,8 +35,50 @@
       AppleShowAllExtensions = true;
       AppleShowAllFiles = true;
       _HIHideMenuBar = true; # Autohide the menu bar.
+      "com.apple.trackpad.forceClick" = false; # Disable force click
     };
     CustomUserPreferences = {
+      NSGlobalDomain = {
+        WebKitDeveloperExtras = true; # Add a context menu item for showing the Web Inspector in web views
+      };
+      "com.apple.finder" = {
+        ShowExternalHardDrivesOnDesktop = true;
+        ShowHardDrivesOnDesktop = true;
+        ShowMountedServersOnDesktop = true;
+        ShowRemovableMediaOnDesktop = true;
+        _FXSortFoldersFirst = true;
+        # When performing a search, search the current folder by default
+        FXDefaultSearchScope = "SCcf";
+      };
+      "com.apple.desktopservices" = {
+        # Avoid creating .DS_Store files on network or USB volumes
+        DSDontWriteNetworkStores = true;
+        DSDontWriteUSBStores = true;
+      };
+      "com.apple.screensaver" = {
+        # Require password immediately after sleep or screen saver begins
+        askForPassword = 1;
+        askForPasswordDelay = 0;
+      };
+      "com.apple.screencapture" = {
+        location = "~/Desktop";
+        type = "png";
+      };
+      "com.apple.AdLib" = {
+        allowApplePersonalizedAdvertising = false;
+      };
+      "com.apple.print.PrintingPrefs" = {
+        "Quit When Finished" = true; # Automatically quit printer app once the print jobs complete
+      };
+      "com.apple.SoftwareUpdate" = {
+        AutomaticCheckEnabled = true;
+        ScheduleFrequency = 1; # Check for software updates daily, not just once per week
+        AutomaticDownload = 1; # Download newly available updates in background
+        CriticalUpdateInstall = 1; # Install System data files & security updates
+      };
+      "com.apple.TimeMachine".DoNotOfferNewDisksForBackup = true; # Disable Time Machine popup when external drives are connected
+      "com.apple.ImageCapture".disableHotPlug = true; # Prevent Photos from opening automatically when devices are plugged in
+      "com.apple.commerce".AutoUpdate = true; # Turn on app auto-update
       "com.apple.symbolichotkeys" = {
         AppleSymbolicHotKeys = {
           # Disable 'Cmd + Space' for Spotlight Search
@@ -65,8 +107,8 @@
   };
 
   system.activationScripts.postUserActivation.text = ''
-    # Following line should allow us to avoid a logout/login cycle
-    /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+    /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u # Allows us to avoid a logout/login cycle to apply the settings
+    defaultbrowser vivaldi # Set default browser
   '';
 
   # Set Git commit hash for darwin-version.

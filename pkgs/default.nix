@@ -30,6 +30,9 @@
     mise
     usage
     gnused
+    sops
+    age
+    gnupg
     # zoxide
     k6
     starship
@@ -48,9 +51,8 @@
     utm
     lastpass-cli
     appcleaner
-    teams
   ] ++ lib.optionals stdenv.isDarwin [
-    cowsay
+    defaultbrowser
   ];
 
   # Homebrew packages
@@ -80,6 +82,7 @@
       "dbgate"
       "firefox@beta"
       "logseq"
+      "microsoft-teams" # nix had old classic version of teams
       # "bruno" # oauth popup not working properly with nix on mac
       "postman"
       "slack" # mic not working properly with nix on mac

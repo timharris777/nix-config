@@ -1,0 +1,10 @@
+[hooks]
+enter = "mise i -q" # Autoinstall dependencies when entering the project directory
+
+[tools]
+go = "latest"
+python = "latest"
+node = "latest"
+
+[settings]
+experimental = true # Enable experimental features (ie hooks)

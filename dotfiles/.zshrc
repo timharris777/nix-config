@@ -5,9 +5,12 @@
 # fi
 
 # znap: Install and source
-[[ -r ~/.znap/znap.zsh ]] ||
-    git clone --depth 1 -- https://github.com/marlonrichert/zsh-snap.git ~/.znap
-source ~/.znap/znap.zsh
+[[ -r ~/.znap/core/znap.zsh ]] ||
+    git clone --depth 1 -- https://github.com/marlonrichert/zsh-snap.git ~/.znap/core
+source ~/.znap/core/znap.zsh
+
+# znap: set the repos directory
+zstyle ':znap:*' repos-dir ~/.znap/repos
 
 # znap: set prompt to startship if available, and if not spaceship
 # znap eval direnv 'direnv hook zsh'
