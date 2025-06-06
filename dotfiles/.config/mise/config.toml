@@ -1,10 +1,18 @@
+[settings]
+experimental = true # Enable experimental features (ie hooks)
+
 [hooks]
-enter = "mise i -q" # Autoinstall dependencies when entering the project directory
+enter = 'echo "ENTER"'
+leave = 'echo "LEAVE"'
+cd = 'echo "CD"'
 
 [tools]
 go = "latest"
 python = "latest"
 node = "latest"
+"ubi:go-task/task" = "latest"
 
-[settings]
-experimental = true # Enable experimental features (ie hooks)
+[tasks."nixd/init"]
+run = "echo 'command needed'"
+[tasks."nixd/reload"]
+run = "darwin-rebuild switch --flake ~/.config/nix#macos"

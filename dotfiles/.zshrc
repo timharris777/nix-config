@@ -24,9 +24,12 @@ znap source zdharma-continuum/fast-syntax-highlighting
 znap source zsh-users/zsh-autosuggestions
 # znap source jeffreytse/zsh-vi-mode
 
-# znap: other
+# Mise
 znap eval mise 'mise activate zsh' # mise activation
 znap fpath _mise 'mise completion zsh' # mise completions
+alias mr="mise run"
+
+# Zoxide
 znap eval zoxide 'zoxide init zsh'
 alias cd="z"
 
@@ -48,6 +51,8 @@ bindkey "^[[B" down-line-or-beginning-search # Down
 # zvm_after_init_commands+=("zvm_bindkey viins '^R' fzf-history-widget" "bindkey '^[[A' up-line-or-beginning-search" "bindkey '^[[B' down-line-or-beginning-search")
 
 # exports
+export VISUAL=vim
+export EDITOR="$VISUAL"
 export PAGER=
 
 # Adding custom paths to PATH

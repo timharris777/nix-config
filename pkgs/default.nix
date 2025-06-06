@@ -27,7 +27,7 @@
     zsh
     gnupg
     gawk
-    mise
+    # mise
     usage
     gnused
     sops
@@ -66,6 +66,7 @@
       "FelixKratz/formulae"
     ];
     brews = [
+      "mise" # nix mise is not up to date
       "argocd" # Argocd admin gives open dist/app/index.html: file does not exist with nix on mac
       "helm" # not supported by nix on mac
       {
