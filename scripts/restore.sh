@@ -32,4 +32,6 @@ function restore_folder() {
 
 restore_file .gitconfig
 restore_file .gitconfig-cfacorp
+restore_file .saml2aws
 restore_folder .gnupg
+restore_folder .aws
