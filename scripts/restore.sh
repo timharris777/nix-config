@@ -35,3 +35,4 @@ restore_file .gitconfig-cfacorp
 restore_file .saml2aws
 restore_folder .gnupg
 restore_folder .aws
+restore_folder .dbgate
