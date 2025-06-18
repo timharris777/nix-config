@@ -81,7 +81,7 @@ function rds-erc-dev() {
     alias=$(aws iam list-account-aliases --output text --query 'AccountAliases[0]')
     instance_id=$(aws ec2 describe-instances --filters 'Name=tag:Name,Values=aloha' --output text --query 'Reservations[*].Instances[*].InstanceId')
     echo "Connecting to ${alias} via the aloha instance (${instance_id}) and creating tunnel: ${cmd}"
-    ssh $instance_id -L "${cmd}"
+    ssh -fNT $instance_id -L "${cmd}"
 }
 function rds-goauth-dev() {
     asp cfaiotnp-admin
@@ -89,7 +89,7 @@ function rds-goauth-dev() {
     alias=$(aws iam list-account-aliases --output text --query 'AccountAliases[0]')
     instance_id=$(aws ec2 describe-instances --filters 'Name=tag:Name,Values=aloha' --output text --query 'Reservations[*].Instances[*].InstanceId')
     echo "Connecting to ${alias} via the aloha instance (${instance_id}) and creating tunnel: ${cmd}"
-    ssh $instance_id -L "${cmd}"
+    ssh -fNT $instance_id -L "${cmd}"
 }
 function rds-erc-mirror() {
     asp cfaioprod-admin
@@ -97,15 +97,19 @@ function rds-erc-mirror() {
     alias=$(aws iam list-account-aliases --output text --query 'AccountAliases[0]')
     instance_id=$(aws ec2 describe-instances --filters 'Name=tag:Name,Values=aloha' --output text --query 'Reservations[*].Instances[*].InstanceId')
     echo "Connecting to ${alias} via the aloha instance (${instance_id}) and creating tunnel: ${cmd}"
-    ssh $instance_id -L "${cmd}"
+    ssh -fNT $instance_id -L "${cmd}"
 }
 function rds-erc-prod() {
     asp cfaiotprod-admin
-    cmd="54341:riot-rds-08242021-cluster.cluster-c8cexsfstnyt.us-east-1.rds.amazonaws.com:5432"
+    secret=$(aws secretsmanager get-secret-value --secret-id "rds/riot-rds-08242021-cluster/erc-host-service-prod-app-secret" --query SecretString --output text)
+    echo $secret
+    port="$(echo $secret | jq -r '.port')"
+    host="$(echo $secret | jq -r '.host')"
+    cmd="54341:$host:$port"
     alias=$(aws iam list-account-aliases --output text --query 'AccountAliases[0]')
     instance_id=$(aws ec2 describe-instances --filters 'Name=tag:Name,Values=aloha' --output text --query 'Reservations[*].Instances[*].InstanceId')
     echo "Connecting to ${alias} via the aloha instance (${instance_id}) and creating tunnel: ${cmd}"
-    ssh $instance_id -L "${cmd}"
+    ssh -fNT $instance_id -L "${cmd}"
 }
 function ensure-chick-fi-login() {
     FILE="$HOME/.oauth/okta_token"
@@ -126,9 +130,13 @@ function ensure-chick-fi-login() {
     #     chick-fi-login -e prod -a riot_util
     # fi
 }
+function nuc-image() {
+    asp cfaiotnp-admin
+    export ISOVERSION=$(aws s3 ls s3://dev-255539238673-us-east-1-nuc-images | awk '{print $2}' | grep "v" | sed 's:/*$::' | fzf --header="Select which image version to use:") && echo "Selected image version: $ISOVERSION..." && ( test -f /tmp/nuc-image-$ISOVERSION.iso || aws s3 cp s3://dev-255539238673-us-east-1-nuc-images/$ISOVERSION/clonezilla.iso /tmp/nuc-image-$ISOVERSION.iso ) && sudo balena local flash /tmp/nuc-image-$ISOVERSION.iso
+}
 function host-wipe-get() {
     ensure-chick-fi-login
-    curl -s --location --request GET "https://hams.riot.cfahome.com/wipe/${1}" --header "Authorization: Bearer $(cat ~/.oauth/okta_token)" | jq '.'
+    curl -s --location --request GET "https://hams.riot-dev.cfadevelop.com/wipe/${1}" --header "Authorization: Bearer $(cat ~/.oauth/okta_token)" | jq '.'
 }
 function host-wipe() {
     min_ago="$(date -u -v -10M +"%Y-%m-%dT%H:%M:%S%z")"

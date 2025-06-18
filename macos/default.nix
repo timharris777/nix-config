@@ -27,19 +27,23 @@
       persistent-apps = [ ];
       appswitcher-all-displays = true;
     };
-    trackpad = {
-      Clicking = true; # Enable tap to click
-      TrackpadThreeFingerDrag = true; # Enable three finger drag
-    };
     NSGlobalDomain = {
       AppleShowAllExtensions = true;
       AppleShowAllFiles = true;
       _HIHideMenuBar = true; # Autohide the menu bar.
-      "com.apple.trackpad.forceClick" = false; # Disable force click
     };
     CustomUserPreferences = {
       NSGlobalDomain = {
         WebKitDeveloperExtras = true; # Add a context menu item for showing the Web Inspector in web views
+      };
+      "com.apple.dock" = {
+        expose-group-apps = true; # Group apps in Mission Control. Fixes tiny mission control thumbnails due to aerospace
+      };
+      "com.apple.AppleMultitouchTrackpad" = {
+        ForceSuppressed = true; # Disable force click
+        Clicking = true; # Enable tap to click
+        TrackpadRightClick = true; # Enable right click
+        TrackpadThreeFingerDrag = true; # Enable three finger drag
       };
       "com.apple.finder" = {
         ShowExternalHardDrivesOnDesktop = true;

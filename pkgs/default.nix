@@ -51,6 +51,7 @@
     utm
     lastpass-cli
     appcleaner
+    act
   ] ++ lib.optionals stdenv.isDarwin [
     defaultbrowser
   ];
@@ -75,6 +76,7 @@
         start_service=true;
       }
       "zoxide"
+      "balena-cli"
     ];
     casks = [
       "ghostty" # not supported by nix on
